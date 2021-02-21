@@ -1,0 +1,14 @@
+.query-explorer {
+  display: flex;
+  flex-direction: row;
+}
+
+.query-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.query-result-pane {
+  display: flex;
+  flex-direction: column;
+}
