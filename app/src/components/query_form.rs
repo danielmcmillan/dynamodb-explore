@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use yew_material::MatTextField;
 
 pub struct QueryForm {
     link: ComponentLink<Self>,
@@ -37,14 +38,8 @@ impl Component for QueryForm {
     fn view(&self) -> Html {
         html! {
             <div class="query-form">
-                <div>
-                    <label>{"Region"}</label>
-                    <input type="text" value=self.region />
-                </div>
-                <div>
-                    <label>{"Table"}</label>
-                    <input type="text" value=self.table_name />
-                </div>
+                <MatTextField label="Region" value=&self.region />
+                <MatTextField label="Table" value=&self.table_name />
             </div>
         }
     }
