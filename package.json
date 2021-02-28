@@ -3,15 +3,18 @@
   "collaborators": [
     "Daniel McMillan <mcmillan.daniel3@gmail.com>"
   ],
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
+    "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "start": "webpack serve --mode development"
   },
   "license": "MIT",
   "devDependencies": {
     "copy-webpack-plugin": "^7.0.0",
+    "electron": "^11.3.0",
+    "source-map-support": "^0.5.19",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
