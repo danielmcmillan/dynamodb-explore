@@ -6,7 +6,6 @@ use yew_material::MatButton;
 pub struct QueryToolbar {
     link: ComponentLink<Self>,
     on_run_clicked: Callback<()>,
-    run_count: i32,
 }
 
 pub enum Msg {
@@ -16,7 +15,6 @@ pub enum Msg {
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
     pub on_run_clicked: Callback<()>,
-    pub run_count: i32,
 }
 
 impl Component for QueryToolbar {
@@ -27,7 +25,6 @@ impl Component for QueryToolbar {
         QueryToolbar {
             link,
             on_run_clicked: props.on_run_clicked,
-            run_count: props.run_count,
         }
     }
 
@@ -39,8 +36,7 @@ impl Component for QueryToolbar {
     }
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.run_count = props.run_count;
-        true
+        false
     }
 
     fn view(&self) -> Html {
@@ -49,7 +45,6 @@ impl Component for QueryToolbar {
                 <span onclick=self.link.callback(|_| Msg::RunClicked)>
                     <MatButton label="Run" />
                 </span>
-                {"Run count: "} {self.run_count}
             </div>
         }
     }

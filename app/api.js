@@ -1,2 +1,1 @@
-export const doQuery = window.api.doQuery;
-export const getResult = window.api.getResult;
+export const dynamodb_request = window.api.dynamodb_request;
