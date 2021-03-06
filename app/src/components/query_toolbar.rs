@@ -1,6 +1,6 @@
 // use super::query_form::QueryForm;
-use yew::prelude::*;
 use yew::html;
+use yew::prelude::*;
 use yew_material::MatButton;
 
 pub struct QueryToolbar {
@@ -47,8 +47,9 @@ impl Component for QueryToolbar {
         html! {
             <div class="query-toolbar">
                 <span onclick=self.link.callback(|_| Msg::RunClicked)>
-                    <MatButton label=format!("Run {}", self.run_count) />
+                    <MatButton label="Run" />
                 </span>
+                {"Run count: "} {self.run_count}
             </div>
         }
     }

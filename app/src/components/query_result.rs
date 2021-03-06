@@ -1,19 +1,24 @@
-use super::query_form::QueryForm;
 use yew::prelude::*;
 
 pub struct QueryResult {
     link: ComponentLink<Self>,
+    result: Option<String>,
 }
 
 #[derive(Clone, PartialEq, Properties)]
-pub struct Props {}
+pub struct Props {
+    pub result: Option<String>,
+}
 
 impl Component for QueryResult {
     type Message = ();
     type Properties = Props;
 
     fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        QueryResult { link }
+        QueryResult {
+            link,
+            result: props.result,
+        }
     }
 
     fn update(&mut self, _msg: Self::Message) -> ShouldRender {
@@ -21,13 +26,14 @@ impl Component for QueryResult {
     }
 
     fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        false
+        self.result = props.result;
+        true
     }
 
     fn view(&self) -> Html {
         html! {
             <div class="query-result">
-                {"This is the result table."}
+                {"Result: "}{self.result.clone().unwrap_or(String::from("None"))}
             </div>
         }
     }

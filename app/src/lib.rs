@@ -5,6 +5,11 @@ use self::utils::set_panic_hook;
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
 
+#[wasm_bindgen(module = "/api.js")]
+extern "C" {
+    fn doQuery() -> JsValue;
+}
+
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
@@ -38,6 +43,7 @@ impl Component for Model {
 
 #[wasm_bindgen(start)]
 pub fn run_app() {
+    doQuery();
     set_panic_hook();
     App::<Model>::new().mount_to_body();
 }
