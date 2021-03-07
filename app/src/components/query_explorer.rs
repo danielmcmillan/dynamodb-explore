@@ -1,17 +1,18 @@
 use super::query_form::QueryForm;
 use super::query_result::QueryResult;
 use super::query_toolbar::QueryToolbar;
+use crate::dynamodb;
 use yew::prelude::*;
 
 pub struct QueryExplorer {
     link: ComponentLink<Self>,
-    query_result: Option<String>,
+    query_result: Option<dynamodb::ResultData>,
     on_run_query: Callback<()>,
 }
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
-    pub query_result: Option<String>,
+    pub query_result: Option<dynamodb::ResultData>,
     pub on_run_query: Callback<()>,
 }
 
