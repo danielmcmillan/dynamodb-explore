@@ -7,18 +7,22 @@ if (require("electron-squirrel-startup")) {
 }
 
 const createWindow = () => {
+  // @ts-ignore
+  const mainEntry: string = MAIN_WINDOW_WEBPACK_ENTRY;
+  // @ts-ignore
+  const preloadEntry: string = MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY;
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      preload: preloadEntry,
       nodeIntegration: false,
       contextIsolation: true,
     },
   });
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL(mainEntry);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
