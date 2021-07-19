@@ -10,7 +10,7 @@ export enum RequestStatus {
 
 export interface RequestState {
   status: RequestStatus;
-  result?: object[];
+  result?: Record<string, unknown>[];
 }
 
 type RequestsState = Record<string, RequestState>;
@@ -32,23 +32,23 @@ function requestsReducer(
 
 export interface DynamoDBContextType {
   requests: RequestsState;
-  startRequest: (id: string) => void;
+  startRequest: (id: string, statement: string) => void;
 }
 
 const DynamoDBContext = React.createContext<DynamoDBContextType>({
   requests: {},
-  startRequest: () => {},
+  startRequest: () => undefined,
 });
 
 interface DynamoDBProviderProps {
   children?: React.ReactNode;
 }
 
-export function DynamoDBProvider({ children }: DynamoDBProviderProps) {
+export function DynamoDBProvider({ children }: DynamoDBProviderProps): React.ReactElement {
   const [requests, requestsDispatch] = useReducer(requestsReducer, {});
 
   const startRequest = useCallback(
-    (id: string) => {
+    (id: string, statement: string) => {
       requestsDispatch({
         id,
         state: {
@@ -59,19 +59,12 @@ export function DynamoDBProvider({ children }: DynamoDBProviderProps) {
         .sendDynamoDBRequest({
           profile: "default",
           region: "ap-southeast-2",
-          tableName: "cloud-chat-dev",
-          expressionAttributeNames: {
-            "#pk": "pk",
-          },
-          expressionAttributeValues: {
-            ":pk": "BHlEfdVWywMCFMA=",
-          },
           options: {
-            type: DynamoDBRequestType.QUERY,
-            keyConditionExpression: "#pk = :pk",
+            type: DynamoDBRequestType.PARTIQL,
+            statement
           },
         })
-        .then((result: object[]) => {
+        .then((result: Record<string, unknown>[]) => {
           console.log("Request results", result);
           requestsDispatch({
             id,

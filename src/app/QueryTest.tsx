@@ -5,8 +5,8 @@ export function QueryTest() {
   const [pk, setPk] = useState<string>("");
   const { requests, startRequest } = useDynamoDB();
   const loadData = useCallback(() => {
-    startRequest("myid");
-  }, [startRequest]);
+    startRequest("myid", pk);
+  }, [startRequest, pk]);
 
   return (
     <div>
