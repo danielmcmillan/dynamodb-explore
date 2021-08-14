@@ -1,34 +1,6 @@
 import React, { useCallback, useContext, useMemo, useReducer } from "react";
-import { api, DynamoDBRequestType } from "./api";
-
-export enum RequestStatus {
-  Running,
-  Successful,
-  Failed,
-  Stopped,
-}
-
-export interface RequestState {
-  status: RequestStatus;
-  result?: Record<string, unknown>[];
-}
-
-type RequestsState = Record<string, RequestState>;
-
-interface RequestAction {
-  id: string;
-  state: RequestState;
-}
-
-function requestsReducer(
-  requests: RequestsState,
-  action: RequestAction
-): RequestsState {
-  return {
-    ...requests,
-    [action.id]: action.state,
-  };
-}
+import { api, DynamoDBRequestType } from "../api";
+import { RequestsState, RequestStatus, requestsReducer } from "./requestReducer";
 
 export interface DynamoDBContextType {
   requests: RequestsState;
@@ -44,7 +16,7 @@ interface DynamoDBProviderProps {
   children?: React.ReactNode;
 }
 
-export function DynamoDBProvider({ children }: DynamoDBProviderProps): React.ReactElement {
+export function DataRequestProvider({ children }: DynamoDBProviderProps): React.ReactElement {
   const [requests, requestsDispatch] = useReducer(requestsReducer, {});
 
   const startRequest = useCallback(
@@ -90,6 +62,6 @@ export function DynamoDBProvider({ children }: DynamoDBProviderProps): React.Rea
   );
 }
 
-export function useDynamoDB(): DynamoDBContextType {
+export function useRequests(): DynamoDBContextType {
   return useContext(DynamoDBContext);
 }

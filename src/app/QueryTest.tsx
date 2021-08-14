@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useState } from "react";
-import { useDynamoDB } from "./DynamoDBProvider";
+import { useRequests } from "./requests/DataRequestProvider";
 
 export function QueryTest() {
   const [pk, setPk] = useState<string>("");
-  const { requests, startRequest } = useDynamoDB();
+  const { requests, startRequest } = useRequests();
   const loadData = useCallback(() => {
     startRequest("myid", pk);
   }, [startRequest, pk]);
